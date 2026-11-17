@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import Container from '../common/Container';
 import ProductCard from './ProductCard';
+import { fetchProductsByCollection } from '../../services/productService';
 import { INSTAGRAM_PRODUCTS } from '../../data/productsData';
 
 export default function LatestCollectionSection() {
   const scrollRef = useRef(null);
+  const [products, setProducts] = useState(INSTAGRAM_PRODUCTS);
+  const [loading, setLoading] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -15,6 +18,29 @@ export default function LatestCollectionSection() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollStart, setScrollStart] = useState(0);
+
+  // Fetch real "Instagram Sale" collection directly from Shopify
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    fetchProductsByCollection('instagram-sale', 24)
+      .then((shopifyProducts) => {
+        if (!isMounted) return;
+        if (shopifyProducts && shopifyProducts.length > 0) {
+          setProducts(shopifyProducts);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn('Error fetching Shopify Instagram Sale collection:', err);
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const checkScrollBounds = () => {
     if (!scrollRef.current) return;
@@ -28,7 +54,7 @@ export default function LatestCollectionSection() {
     checkScrollBounds();
     window.addEventListener('resize', checkScrollBounds);
     return () => window.removeEventListener('resize', checkScrollBounds);
-  }, []);
+  }, [products]);
 
   const scrollBy = (dir) => {
     scrollRef.current?.scrollBy({ left: dir === 'left' ? -380 : 380, behavior: 'smooth' });
@@ -51,9 +77,9 @@ export default function LatestCollectionSection() {
   };
 
   return (
-    <section className="py-8 sm:py-12 bg-white overflow-hidden" aria-label="Latest Collection">
+    <section className="py-8 sm:py-12 bg-white overflow-hidden select-none" aria-label="Latest Collection">
       <Container size="wide">
-        {/* Header matching user's photo */}
+        {/* Section Header matching exact photo style */}
         <div className="flex items-end justify-between mb-6 sm:mb-8">
           <div>
             <motion.h2
@@ -75,6 +101,7 @@ export default function LatestCollectionSection() {
               Shop the latest collection before they sell out
             </motion.p>
           </div>
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -82,7 +109,7 @@ export default function LatestCollectionSection() {
             transition={{ duration: 0.6 }}
           >
             <Link
-              to="/collections"
+              to="/collections/instagram-sale"
               className="text-xs sm:text-sm font-semibold text-[#18221F] hover:text-[#6fa993] transition-colors flex items-center gap-1 group py-1"
             >
               <span>View All</span>
@@ -117,14 +144,16 @@ export default function LatestCollectionSection() {
             onMouseLeave={onMouseUp}
             onMouseMove={onMouseMove}
             onWheel={onWheel}
-            className={`flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pt-1 pb-3 w-full [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth overscroll-x-contain select-none ${
+            className={`flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pt-1 pb-3 w-full [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth overscroll-x-contain ${
               isDragging ? 'cursor-grabbing' : 'cursor-grab'
             }`}
           >
-            {INSTAGRAM_PRODUCTS.map((product) => (
-              <div key={`latest-${product.id}`} className="shrink-0 snap-start">
+            {products.map((product, idx) => (
+              <div key={product.id || `instagram-prod-${idx}`} className="shrink-0 snap-start">
                 <ProductCard
                   product={product}
+                  collectionSlug="instagram-sale"
+                  collectionTitle="Instagram Sale"
                   isActiveTouched={activeTouchedCardId === product.id}
                   onTouchCard={(id) => setActiveTouchedCardId((p) => (p === id ? null : id))}
                 />

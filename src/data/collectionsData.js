@@ -85,6 +85,12 @@ export const shopByCollections = [
     image: 'https://inamcloth.com/cdn/shop/files/96.jpg?v=1732737649&width=540',
     count: '27 Designs',
   },
+  {
+    id: 13,
+    name: 'Instagram Sale',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: '20+ Designs',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);
