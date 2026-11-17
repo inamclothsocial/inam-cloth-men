@@ -4,6 +4,7 @@ import ServiceHighlights from '../components/home/ServiceHighlights';
 import NewArrivalsSection from '../components/home/NewArrivalsSection';
 import CollectionGridSection from '../components/home/CollectionGridSection';
 import ProductShowcaseSection from '../components/home/ProductShowcaseSection';
+import LatestCollectionSection from '../components/home/LatestCollectionSection';
 import EditorialCollageSection from '../components/home/EditorialCollageSection';
 import WholesaleBanner from '../components/home/WholesaleBanner';
 import BrandShowcaseSection from '../components/home/BrandShowcaseSection';
@@ -24,7 +25,10 @@ export default function Home() {
       {/* 4. Curated Gallery: Shop By Collection */}
       <CollectionGridSection />
 
-      {/* 5. Trending Drops: Best Seller Products */}
+      {/* 5. Latest Collection Horizontal Scroll Section (Above Best Seller) */}
+      <LatestCollectionSection />
+
+      {/* 6. Trending Drops: Best Seller Products */}
       <ProductShowcaseSection />
 
       {/* 6. 5-Image Luxury Editorial Collection Collage */}

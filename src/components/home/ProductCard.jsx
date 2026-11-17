@@ -34,6 +34,10 @@ export default function ProductCard({
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 50;
 
+  const discountBadge = product.tag && product.tag.includes('%')
+    ? product.tag
+    : `${discount}% OFF`;
+
   const handleOpenDetails = (e) => {
     if (e) e.stopPropagation();
     const activeSlug = collectionSlug || product.collectionSlug;
@@ -82,19 +86,19 @@ export default function ProductCard({
           ))}
         </motion.div>
 
-        <span className="absolute top-2.5 left-2.5 bg-[#E53E3E] text-white text-[9px] sm:text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm shadow-xs z-10 pointer-events-none">
-          {discount}% OFF
+        <span className="absolute top-2.5 left-2.5 bg-[#E53E3E] text-white text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[2px] shadow-xs z-10 pointer-events-none">
+          {discountBadge}
         </span>
 
         <div className={`absolute top-2.5 right-2.5 flex flex-col gap-1.5 z-20 transition-all duration-300 ${isActiveTouched ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0'}`}>
-          <button onClick={handleOpenDetails} className="w-8 h-8 rounded-full bg-white text-[#18221F] hover:bg-[#6fa993] hover:text-white border border-[#CAB27E]/40 shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer" aria-label="View Details"><Eye className="w-4 h-4 stroke-[1.75]" /></button>
-          <button onClick={(e) => { e.stopPropagation(); dispatch(toggleWishlist(product)); }} className={`w-8 h-8 rounded-full border shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer ${inWishlist ? 'bg-[#6fa993] text-white border-[#6fa993]' : 'bg-white border-[#CAB27E]/40 text-[#18221F] hover:bg-[#6fa993] hover:text-white'}`} aria-label="Wishlist"><Heart className={`w-4 h-4 stroke-[1.75] ${inWishlist ? 'fill-white' : ''}`} /></button>
-          <button onClick={(e) => { e.stopPropagation(); if (inCompare || compareCount < 4) dispatch(toggleCompare(product)); else dispatch(showToast('Maximum 4 products can be compared.')); }} className={`w-8 h-8 rounded-full border shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer ${inCompare ? 'bg-[#6fa993] text-white border-[#6fa993]' : 'bg-white border-[#CAB27E]/40 text-[#18221F] hover:bg-[#6fa993] hover:text-white'}`} aria-label="Compare"><ArrowLeftRight className="w-4 h-4 stroke-[1.75]" /></button>
+          <button onClick={handleOpenDetails} className="w-8 h-8 rounded-full bg-white text-[#18221F] hover:bg-[#6fa993] hover:text-white border border-gray-200 shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer" aria-label="View Details"><Eye className="w-4 h-4 stroke-[1.75]" /></button>
+          <button onClick={(e) => { e.stopPropagation(); dispatch(toggleWishlist(product)); }} className={`w-8 h-8 rounded-full border shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer ${inWishlist ? 'bg-[#6fa993] text-white border-[#6fa993]' : 'bg-white border-gray-200 text-[#18221F] hover:bg-[#6fa993] hover:text-white'}`} aria-label="Wishlist"><Heart className={`w-4 h-4 stroke-[1.75] ${inWishlist ? 'fill-white' : ''}`} /></button>
+          <button onClick={(e) => { e.stopPropagation(); if (inCompare || compareCount < 4) dispatch(toggleCompare(product)); else dispatch(showToast('Maximum 4 products can be compared.')); }} className={`w-8 h-8 rounded-full border shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer ${inCompare ? 'bg-[#6fa993] text-white border-[#6fa993]' : 'bg-white border-gray-200 text-[#18221F] hover:bg-[#6fa993] hover:text-white'}`} aria-label="Compare"><ArrowLeftRight className="w-4 h-4 stroke-[1.75]" /></button>
         </div>
 
         <button
           onClick={(e) => { e.stopPropagation(); dispatch(addToCart({ product, size: 'Standard', quantity: 1 })); dispatch(showToast('Added to Cart!')); }}
-          className="absolute bottom-2.5 right-2.5 w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white text-[#18221F] hover:bg-[#6fa993] hover:text-white border border-[#CAB27E]/45 shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 z-20 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:translate-y-2 sm:group-hover:translate-y-0 cursor-pointer"
+          className="absolute bottom-2.5 right-2.5 w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white text-[#18221F] hover:bg-[#6fa993] hover:text-white border border-gray-200 shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 z-20 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:translate-y-2 sm:group-hover:translate-y-0 cursor-pointer"
           aria-label="Add to Cart"
         >
           <ShoppingBag className="w-4 h-4 stroke-[1.8]" />
@@ -103,13 +107,13 @@ export default function ProductCard({
 
       <div className="pt-2 sm:pt-2.5 px-0.5 sm:px-0 flex flex-col flex-1 justify-between">
         <div>
-          <p className="text-[9.5px] text-[#CAB27E] font-semibold uppercase tracking-wider">{product.category || 'SUIT'}</p>
-          <h3 className="text-xs sm:text-[12.5px] font-medium text-[#18221F] mt-0.5 line-clamp-1 group-hover:text-[#6fa993] transition-colors leading-snug">{product.name}</h3>
+          <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">{product.category || 'SUIT'}</p>
+          <h3 className="text-xs sm:text-[13px] font-normal text-[#18221F] mt-0.5 line-clamp-1 group-hover:text-[#6fa993] transition-colors leading-snug">{product.name}</h3>
         </div>
         <div className="mt-1.5 flex items-center justify-between">
           <div className="flex items-baseline gap-1.5">
-            <span className="text-xs sm:text-[13px] font-semibold text-[#18221F]">Rs. {product.price.toFixed(2)}</span>
-            {product.originalPrice && <span className="text-[10px] text-[#6F756F] line-through">Rs. {product.originalPrice.toFixed(2)}</span>}
+            <span className="text-xs sm:text-[13px] font-bold text-[#18221F]">Rs. {Number(product.price).toFixed(2)}</span>
+            {product.originalPrice && <span className="text-[10px] sm:text-[11px] text-gray-400 line-through">Rs. {Number(product.originalPrice).toFixed(2)}</span>}
           </div>
           {product.colors && product.colors.length > 0 && (
             <div className="flex items-center gap-1">
