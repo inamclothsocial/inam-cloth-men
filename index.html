@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="https://inamcloth.com/cdn/shop/files/logo.png?v=1732880181&width=200" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INAM CLOTH | Premium Women's Luxury Ethnic Wear</title>
+    <meta name="description" content="Explore luxury Indian women's ethnic fashion, premium bridal collections, and festive wear at INAM CLOTH." />
+    
+    <!-- Google Fonts Poppins and Cormorant Garamond for clean modern luxury typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+
+    <!-- GoKwik Merchant Configuration & Headless Cart Bridge (Runs BEFORE GoKwik SDK) -->
+    <script>
+      window.Shopify = window.Shopify || {};
+      window.Shopify.shop = 'ad6k2z-7v.myshopify.com';
+      window.Shopify.domain = 'inamcloth.com';
+      window.Shopify.currency = { active: 'INR', rate: '1.0' };
+      window.Shopify.country = 'IN';
+      window.Shopify.theme = { id: 1, name: 'Headless' };
+      window.Shopify.routes = { root: '/' };
+      window.Shopify.$$ = window.Shopify.$$ || function(sel) {
+        if (typeof sel === 'function') { return window.addEventListener('DOMContentLoaded', sel); }
+        try { return document.querySelectorAll(sel); } catch(e) { return []; }
+      };
+      window.ShopifyAnalytics = window.ShopifyAnalytics || {
+        meta: { currency: 'INR', page: { path: '/cart', pageType: 'cart' } },
+        lib: { track: function() {}, page: function() {} }
+      };
+
+      window.merchantInfo = {
+        mid: "1983dibvcu8t",
+        environment: "production",
+        type: "merchantInfo",
+        storeId: "66597847191",
+        fbPixel: "",
+        isHydrogen: true,
+        platform: "shopify"
+      };
+
+      (function() {
+        function getCartJson() {
+          var items = [];
+          try {
+            var raw = localStorage.getItem('inam_cart_items');
+            if (raw) items = JSON.parse(raw);
+          } catch(e) {}
+          var formatted = items.map(function(item, idx) {
+            var pricePaise = Math.round((Number(item.price) || 0) * 100);
+            var qty = Number(item.quantity) || 1;
+            var rawVid = item.variantId || item.id || (1000000 + idx);
+            var vid = typeof rawVid === 'number' ? rawVid : parseInt(String(rawVid).replace(/\D/g, ''), 10) || (1000000 + idx);
+            var pid = typeof item.productId === 'number' ? item.productId : parseInt(String(item.productId || item.id).replace(/\D/g, ''), 10) || vid;
+            return {
+              id: vid,
+              variant_id: vid,
+              product_id: pid,
+              title: item.name || 'Designer Festive Suit',
+              product_title: item.name || 'Designer Festive Suit',
+              variant_title: item.size || 'Standard',
+              price: pricePaise,
+              line_price: pricePaise * qty,
+              original_price: pricePaise,
+              original_line_price: pricePaise * qty,
+              discounted_price: pricePaise,
+              quantity: qty,
+              sku: item.sku || '',
+              grams: 500,
+              vendor: 'INAM CLOTH',
+              handle: (item.name || 'product').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              image: item.image || 'https://inamcloth.com/cdn/shop/files/141.jpg?v=1732737874&width=540',
+              featured_image: { url: item.image || 'https://inamcloth.com/cdn/shop/files/141.jpg?v=1732737874&width=540' },
+              url: '/product/' + (item.productId || item.id),
+              requires_shipping: true,
+              taxable: false,
+              gift_card: false,
+              final_price: pricePaise,
+              final_line_price: pricePaise * qty,
+              options_with_values: [{ name: 'Size', value: item.size || 'Standard' }]
+            };
+          });
+          var totalPaise = formatted.reduce(function(sum, i) { return sum + i.line_price; }, 0);
+          var totalCount = formatted.reduce(function(sum, i) { return sum + i.quantity; }, 0);
+          return {
+            token: 'inam_' + Date.now().toString(36),
+            note: null,
+            attributes: {},
+            original_total_price: totalPaise,
+            total_price: totalPaise,
+            total_discount: 0,
+            total_weight: 500 * totalCount,
+            item_count: totalCount,
+            items: formatted,
+            requires_shipping: true,
+            currency: 'INR',
+            items_subtotal_price: totalPaise
+          };
+        }
+
+        var origFetch = window.fetch;
+        window.fetch = function(input, init) {
+          var url = typeof input === 'string' ? input : (input && input.url ? input.url : '');
+          if (url.indexOf('/cart.js') !== -1 || url.indexOf('/cart/add.js') !== -1 || url.indexOf('/cart/clear.js') !== -1 || url.indexOf('/cart/change.js') !== -1) {
+            var data = getCartJson();
+            return Promise.resolve(new Response(JSON.stringify(data), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' }
+            }));
+          }
+          return origFetch.apply(this, arguments);
+        };
+
+        var origXhrOpen = XMLHttpRequest.prototype.open;
+        var origXhrSend = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          this._url = url;
+          return origXhrOpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function(body) {
+          if (this._url && (this._url.indexOf('/cart.js') !== -1 || this._url.indexOf('/cart/add.js') !== -1 || this._url.indexOf('/cart/clear.js') !== -1)) {
+            var data = JSON.stringify(getCartJson());
+            Object.defineProperty(this, 'status', { value: 200, writable: false });
+            Object.defineProperty(this, 'statusText', { value: 'OK', writable: false });
+            Object.defineProperty(this, 'responseText', { value: data, writable: false });
+            Object.defineProperty(this, 'response', { value: data, writable: false });
+            Object.defineProperty(this, 'readyState', { value: 4, writable: false });
+            var self = this;
+            setTimeout(function() {
+              if (typeof self.onreadystatechange === 'function') self.onreadystatechange();
+              if (typeof self.onload === 'function') self.onload();
+            }, 10);
+            return;
+          }
+          return origXhrSend.apply(this, arguments);
+        };
+      })();
+    </script>
+
+    <!-- GoKwik Merchant Integration SDK (Official Headless Custom Storefront Script) -->
+    <script src="https://pdp.gokwik.co/merchant-integration/build/merchant.integration.js?v4"></script>
+  </head>
+  <body class="bg-[#FBF8F2] text-[#18221F] antialiased selection:bg-[#CAB27E] selection:text-white overflow-x-clip font-sans">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

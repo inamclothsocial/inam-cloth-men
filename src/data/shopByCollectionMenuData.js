@@ -1,0 +1,42 @@
+import newArrivalsBanner from '../assets/banner/New_Arrivals.png';
+
+export const COLLECTION_SECTIONS = [
+  {
+    title: 'Fabrics',
+    cards: [
+      { id: 'fab-cotton-dupatta-suits', name: 'COTTON DUPATTA SUITS', image: newArrivalsBanner, path: '/stitched/cotton-dupatta-suits' },
+      { id: 'fab-muslin', name: 'MUSLIN', image: newArrivalsBanner, path: '/stitched/muslin' },
+      { id: 'fab-rayon', name: 'RAYON', image: newArrivalsBanner, path: '/stitched/rayon' },
+      { id: 'fab-chanderi', name: 'CHANDERI', image: newArrivalsBanner, path: '/stitched/chanderi' },
+      { id: 'fab-georgette', name: 'GEORGETTE', image: newArrivalsBanner, path: '/stitched/georgette' },
+      { id: 'fab-chiffon', name: 'CHIFFON', image: newArrivalsBanner, path: '/stitched/chiffon' },
+      { id: 'fab-organza', name: 'ORGANZA', image: newArrivalsBanner, path: '/stitched/organza' },
+      { id: 'fab-crepe-suits', name: 'CREPE SUITS', image: newArrivalsBanner, path: '/stitched/crepe-suits' },
+      { id: 'fab-chinon', name: 'CHINON', image: newArrivalsBanner, path: '/stitched/chinon' },
+    ],
+  },
+  {
+    title: 'Luxury',
+    cards: [
+      { id: 'lux-gowns', name: 'GOWNS', image: newArrivalsBanner, path: '/luxury/stitched/gowns' },
+      { id: 'lux-dresses', name: 'DRESSES', image: newArrivalsBanner, path: '/luxury/stitched/dresses' },
+      { id: 'lux-premium-chikankari', name: 'PREMIUM CHIKANKARI', image: newArrivalsBanner, path: '/luxury/stitched/premium-chikankari' },
+      { id: 'lux-farshi', name: 'FARSHI', image: newArrivalsBanner, path: '/luxury/stitched/farshi' },
+      { id: 'lux-handwork', name: 'HANDWORK', image: newArrivalsBanner, path: '/luxury/stitched/handwork' },
+      { id: 'lux-kimkhab-gown', name: 'KIMKHAB GOWN', image: newArrivalsBanner, path: '/luxury/stitched/kimkhab-gown' },
+      { id: 'lux-chiffon-semi-stitched', name: 'CHIFFON SEMI-STITCHED', image: newArrivalsBanner, path: '/luxury/unstitched/chiffon-semi-stitched' },
+      { id: 'lux-organza-handwork', name: 'ORGANZA HANDWORK', image: newArrivalsBanner, path: '/luxury/unstitched/organza-handwork' },
+      { id: 'lux-premium-lawn', name: 'PREMIUM LAWN', image: newArrivalsBanner, path: '/luxury/unstitched/premium-lawn' },
+      { id: 'lux-kimkhab-banarasi', name: 'KIMKHAB BANARASI', image: newArrivalsBanner, path: '/luxury/unstitched/kimkhab-banarasi' },
+    ],
+  },
+  {
+    title: 'Special',
+    cards: [
+      { id: 'spec-poncho', name: 'PONCHO', image: newArrivalsBanner, path: '/special/poncho' },
+      { id: 'spec-hijabs', name: 'HIJABS', image: newArrivalsBanner, path: '/special/hijabs' },
+      { id: 'spec-stole', name: 'STOLE', image: newArrivalsBanner, path: '/special/stole' },
+      { id: 'spec-shawl', name: 'SHAWL', image: newArrivalsBanner, path: '/special/shawl' },
+    ],
+  },
+];
