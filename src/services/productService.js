@@ -151,6 +151,12 @@ export async function fetchProductsByCollection(target, first = 50) {
     'crepe-suits-unstitched-copy': ['gid://shopify/Collection/490774364311', 'gid://shopify/Collection/490774397079'],
     'chinon-copy': ['gid://shopify/Collection/490774397079', 'gid://shopify/Collection/490774364311'],
 
+    // Farshi (Luxury)
+    farshi: 'gid://shopify/Collection/490775478423',
+    'luxury-stitched-farshi': 'gid://shopify/Collection/490775478423',
+    'stitched-farshi': 'gid://shopify/Collection/490775478423',
+    'premium-chikankari-copy': 'gid://shopify/Collection/490775478423',
+
     // Special & Instagram
     'instagram-sale': 'gid://shopify/Collection/306869239959',
   };

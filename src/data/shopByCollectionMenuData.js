@@ -21,7 +21,7 @@ export const COLLECTION_SECTIONS = [
       { id: 'lux-gowns', name: 'GOWNS', image: newArrivalsBanner, path: '/luxury/stitched/gowns' },
       { id: 'lux-dresses', name: 'DRESSES', image: newArrivalsBanner, path: '/luxury/stitched/dresses' },
       { id: 'lux-premium-chikankari', name: 'PREMIUM CHIKANKARI', image: newArrivalsBanner, path: '/luxury/stitched/premium-chikankari' },
-      { id: 'lux-farshi', name: 'FARSHI', image: newArrivalsBanner, path: '/luxury/stitched/farshi' },
+      { id: 'lux-farshi', name: 'FARSHI', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/E9BF7BEB-E2B6-4DE6-9606-1F2AF0460C13.jpg?v=1792147443', path: '/luxury/stitched/farshi', collectionGid: 'gid://shopify/Collection/490775478423', collectionHandle: 'premium-chikankari-copy' },
       { id: 'lux-handwork', name: 'HANDWORK', image: newArrivalsBanner, path: '/luxury/stitched/handwork' },
       { id: 'lux-kimkhab-gown', name: 'KIMKHAB GOWN', image: newArrivalsBanner, path: '/luxury/stitched/kimkhab-gown' },
       { id: 'lux-chiffon-semi-stitched', name: 'CHIFFON SEMI-STITCHED', image: newArrivalsBanner, path: '/luxury/unstitched/chiffon-semi-stitched' },

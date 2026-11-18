@@ -109,6 +109,15 @@ export const shopByCollections = [
     image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
     count: 'Live Collection',
   },
+  {
+    id: 16,
+    name: 'Farshi',
+    slug: 'farshi',
+    collectionGid: 'gid://shopify/Collection/490775478423',
+    collectionHandle: 'premium-chikankari-copy',
+    image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/E9BF7BEB-E2B6-4DE6-9606-1F2AF0460C13.jpg?v=1792147443',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);

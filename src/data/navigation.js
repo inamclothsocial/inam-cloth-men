@@ -51,7 +51,7 @@ export const NAV_LINKS = [
           { id: 'luxury-stitched-gowns', label: 'Gowns', path: '/luxury/stitched/gowns' },
           { id: 'luxury-stitched-dresses', label: 'Dresses', path: '/luxury/stitched/dresses' },
           { id: 'luxury-stitched-premium-chikankari', label: 'Premium Chikankari', path: '/luxury/stitched/premium-chikankari' },
-          { id: 'luxury-stitched-farshi', label: 'Farshi', path: '/luxury/stitched/farshi' },
+          { id: 'luxury-stitched-farshi', label: 'Farshi', path: '/luxury/stitched/farshi', collectionGid: 'gid://shopify/Collection/490775478423', collectionHandle: 'premium-chikankari-copy' },
           { id: 'luxury-stitched-handwork', label: 'Handwork', path: '/luxury/stitched/handwork' },
           { id: 'luxury-stitched-kimkhab-gown', label: 'Kimkhab Gown', path: '/luxury/stitched/kimkhab-gown' },
         ],
