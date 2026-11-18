@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import MobileBottomNav from '../components/layout/MobileBottomNav';
-import MobileMenu from '../components/layout/MobileMenu';
-import SearchModal from '../components/layout/SearchModal';
-import CartDrawer from '../components/layout/CartDrawer';
 import FloatingCompareTab from '../components/common/FloatingCompareTab';
-import CompareModal from '../components/common/CompareModal';
 import ToastNotification from '../components/common/ToastNotification';
-import WishlistModal from '../components/common/WishlistModal';
 import Footer from '../components/layout/Footer';
 import ScrollProgressLogo from '../components/common/ScrollProgressLogo';
 import { useScrollHeader } from '../hooks/useScrollHeader';
 import { fetchNavigationData } from '../store/slices/navigationSlice';
+
+const MobileMenu = lazy(() => import('../components/layout/MobileMenu'));
+const SearchModal = lazy(() => import('../components/layout/SearchModal'));
+const CartDrawer = lazy(() => import('../components/layout/CartDrawer'));
+const WishlistModal = lazy(() => import('../components/common/WishlistModal'));
+const CompareModal = lazy(() => import('../components/common/CompareModal'));
 
 export default function MainLayout() {
   const dispatch = useDispatch();
@@ -45,21 +46,23 @@ export default function MainLayout() {
       {/* Floating Right-Side Compare Tab (Vertically Centered) */}
       <FloatingCompareTab />
 
-      {/* Global Compare Modal Popup */}
-      <CompareModal />
-
       {/* Floating Mobile Bottom Navigation Bar on Scroll */}
       <MobileBottomNav isVisible={showBottomNav} />
 
       {/* Floating Desktop Bottom-Right Scroll Progress Logo (Laptop Only) */}
       <ScrollProgressLogo />
 
-      {/* Interactive Global Modals & Drawers */}
-      <MobileMenu />
-      <SearchModal />
-      <CartDrawer />
-      <WishlistModal />
+      {/* Toast Notification */}
       <ToastNotification />
+
+      {/* Interactive Global Modals & Drawers (Lazy Loaded) */}
+      <Suspense fallback={null}>
+        <CompareModal />
+        <MobileMenu />
+        <SearchModal />
+        <CartDrawer />
+        <WishlistModal />
+      </Suspense>
     </div>
   );
 }
