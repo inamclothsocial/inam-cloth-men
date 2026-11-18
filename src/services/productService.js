@@ -85,11 +85,40 @@ export async function getShopifyCollectionsMap() {
 
 export async function fetchProductsByCollection(target, first = 50) {
   if (!target) return [];
+
+  // Known Shopify Collection Mappings
+  const KNOWN_OVERRIDES = {
+    chiffon: ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'stitched-chiffon': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'unstitched-chiffon': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'georgette-unstitched-copy': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'chiffon-unstitched': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'chiffon-copy': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
+    'chiffon-semi-stitched': 'gid://shopify/Collection/490775904407',
+    'kimkhab-gharara-copy': 'gid://shopify/Collection/490775904407',
+    'instagram-sale': 'gid://shopify/Collection/306869239959',
+  };
+
+  // If target string matches a known override that is an array
+  if (typeof target === 'string') {
+    const lower = target.toLowerCase().trim();
+    if (KNOWN_OVERRIDES[lower] && Array.isArray(KNOWN_OVERRIDES[lower])) {
+      return fetchProductsByCollection(KNOWN_OVERRIDES[lower], first);
+    }
+  }
+
   if (Array.isArray(target)) {
     const validHandles = target.filter(Boolean);
     if (!validHandles.length) return [];
     if (validHandles.length === 1) return fetchProductsByCollection(validHandles[0], first);
-    const aliases = validHandles.map((h, i) => `col_${i}: collection(handle: "${h}") { products(first: ${first}) { nodes { ${PRODUCT_FIELDS} } } }`).join('\n');
+    const aliases = validHandles
+      .map((h, i) => {
+        if (h.startsWith('gid://shopify/Collection/')) {
+          return `col_${i}: node(id: "${h}") { ... on Collection { products(first: ${first}) { nodes { ${PRODUCT_FIELDS} } } } }`;
+        }
+        return `col_${i}: collection(handle: "${h}") { products(first: ${first}) { nodes { ${PRODUCT_FIELDS} } } }`;
+      })
+      .join('\n');
     try {
       const data = await shopifyFetch({ query: `query GetMultiColProducts { ${aliases} }` });
       const seen = new Set();
@@ -107,19 +136,6 @@ export async function fetchProductsByCollection(target, first = 50) {
       return [];
     }
   }
-
-  // Known Shopify Collection Mappings
-  const KNOWN_OVERRIDES = {
-    chiffon: 'gid://shopify/Collection/490773414039',
-    'stitched-chiffon': 'gid://shopify/Collection/490773414039',
-    'unstitched-chiffon': 'gid://shopify/Collection/490773414039',
-    'georgette-unstitched-copy': 'gid://shopify/Collection/490773414039',
-    'chiffon-unstitched': 'gid://shopify/Collection/490773446807',
-    'chiffon-copy': 'gid://shopify/Collection/490773446807',
-    'chiffon-semi-stitched': 'gid://shopify/Collection/490775904407',
-    'kimkhab-gharara-copy': 'gid://shopify/Collection/490775904407',
-    'instagram-sale': 'gid://shopify/Collection/306869239959',
-  };
 
   let resolvedGid = null;
   if (typeof target === 'string') {
@@ -140,7 +156,7 @@ export async function fetchProductsByCollection(target, first = 50) {
     }
   }
 
-  if (resolvedGid) {
+  if (resolvedGid && typeof resolvedGid === 'string') {
     try {
       const data = await shopifyFetch({
         query: GET_COLLECTION_BY_NODE_QUERY,
