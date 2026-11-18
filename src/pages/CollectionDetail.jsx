@@ -53,8 +53,8 @@ export default function CollectionDetail() {
     if (activeItem) return activeItem.collectionGid || activeItem.collectionHandle || subCategorySlug;
     if (subCategorySlug) return subCategorySlug;
     if (navCategory) {
-      const childHandles = navCategory.children?.map((c) => c.collectionHandle).filter(Boolean) || [];
-      const groupHandles = navCategory.groups?.flatMap((g) => g.items?.map((i) => i.collectionHandle)).filter(Boolean) || [];
+      const childHandles = navCategory.children?.map((c) => c.collectionGid || c.collectionHandle).filter(Boolean) || [];
+      const groupHandles = navCategory.groups?.flatMap((g) => g.items?.map((i) => i.collectionGid || i.collectionHandle)).filter(Boolean) || [];
       const allHandles = [...childHandles, ...groupHandles];
       if (allHandles.length) return allHandles;
       return navCategory.collectionHandle || categorySlug;
