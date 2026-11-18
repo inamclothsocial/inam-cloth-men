@@ -26,7 +26,7 @@ export const COLLECTION_SECTIONS = [
       { id: 'lux-kimkhab-gown', name: 'KIMKHAB GOWN', image: newArrivalsBanner, path: '/luxury/stitched/kimkhab-gown' },
       { id: 'lux-chiffon-semi-stitched', name: 'CHIFFON SEMI-STITCHED', image: newArrivalsBanner, path: '/luxury/unstitched/chiffon-semi-stitched' },
       { id: 'lux-organza-handwork', name: 'ORGANZA HANDWORK', image: newArrivalsBanner, path: '/luxury/unstitched/organza-handwork' },
-      { id: 'lux-premium-lawn', name: 'PREMIUM LAWN', image: newArrivalsBanner, path: '/luxury/unstitched/premium-lawn' },
+      { id: 'lux-premium-lawn', name: 'PREMIUM LAWN', image: newArrivalsBanner, path: '/luxury/unstitched/premium-lawn', collectionHandle: 'premium-lawn' },
       { id: 'lux-kimkhab-banarasi', name: 'KIMKHAB BANARASI', image: newArrivalsBanner, path: '/luxury/unstitched/kimkhab-banarasi' },
     ],
   },

@@ -62,7 +62,7 @@ export const NAV_LINKS = [
           { id: 'luxury-unstitched-handwork', label: 'Handwork', path: '/luxury/unstitched/handwork', collectionGid: 'gid://shopify/Collection/490775675031', collectionHandle: 'handwork-copy' },
           { id: 'luxury-unstitched-chiffon-semi-stitched', label: 'Chiffon Semi-Stitched', path: '/luxury/unstitched/chiffon-semi-stitched' },
           { id: 'luxury-unstitched-organza-handwork', label: 'Organza Handwork', path: '/luxury/unstitched/organza-handwork' },
-          { id: 'luxury-unstitched-premium-lawn', label: 'Premium Lawn', path: '/luxury/unstitched/premium-lawn' },
+          { id: 'luxury-unstitched-premium-lawn', label: 'Premium Lawn', path: '/luxury/unstitched/premium-lawn', collectionHandle: 'premium-lawn' },
           { id: 'luxury-unstitched-kimkhab-banarasi', label: 'Kimkhab Banarasi', path: '/luxury/unstitched/kimkhab-banarasi' },
         ],
       },

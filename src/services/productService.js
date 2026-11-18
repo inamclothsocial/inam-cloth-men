@@ -188,6 +188,11 @@ export async function fetchProductsByCollection(target, first = 50) {
     'premium-chikankari': 'premium-chikankari',
     'stitched-premium-chikankari': 'premium-chikankari',
 
+    // Premium Lawn (Luxury Unstitched)
+    'luxury-unstitched-premium-lawn': 'premium-lawn',
+    'premium-lawn': 'premium-lawn',
+    'unstitched-premium-lawn': 'premium-lawn',
+
     // Special & Instagram
     'instagram-sale': 'gid://shopify/Collection/306869239959',
   };

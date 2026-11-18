@@ -45,9 +45,22 @@ export default function CollectionDetail() {
   const activeItem = useMemo(() => {
     if (!subCategorySlug) return null;
     const fromChild = navCategory?.children?.find((c) => c.path.includes(subCategorySlug) || c.id.endsWith(subCategorySlug) || c.collectionHandle === subCategorySlug);
-    const fromGroup = navCategory?.groups?.flatMap((g) => g.items || []).find((i) => i.path.includes(subCategorySlug) || i.id.endsWith(subCategorySlug) || i.collectionHandle === subCategorySlug);
-    return fromChild || fromGroup || null;
-  }, [navCategory, subCategorySlug]);
+    if (fromChild) return fromChild;
+
+    const groupSlug = (params.groupSlug || "").toLowerCase();
+    let relevantItems = navCategory?.groups?.flatMap((g) => g.items || []) || [];
+    if (groupSlug && navCategory?.groups) {
+      const matchedGroup = navCategory.groups.find((g) => (g.groupTitle || "").toLowerCase() === groupSlug);
+      if (matchedGroup?.items?.length) {
+        relevantItems = matchedGroup.items;
+      }
+    }
+    const fromGroup = relevantItems.find(
+      (i) => (groupSlug ? i.path.toLowerCase().includes(groupSlug) : true) &&
+             (i.path.includes(subCategorySlug) || i.id.endsWith(subCategorySlug) || i.collectionHandle === subCategorySlug)
+    ) || relevantItems.find((i) => i.path.includes(subCategorySlug) || i.id.endsWith(subCategorySlug) || i.collectionHandle === subCategorySlug);
+    return fromGroup || null;
+  }, [navCategory, subCategorySlug, params.groupSlug]);
 
   const targetHandle = useMemo(() => {
     if (activeItem) return activeItem.collectionGid || activeItem.collectionHandle || subCategorySlug;
