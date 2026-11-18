@@ -315,8 +315,18 @@ export async function fetchProductByHandle(handle) {
 
 export async function fetchNewArrivalsProducts(first = 50) {
   try {
-    return await fetchProductsByCollection('new-arrivals', first);
+    const data = await shopifyFetch({
+      query: `query GetNewArrivals($first: Int = 50) {
+        products(first: $first, sortKey: CREATED_AT, reverse: true) {
+          nodes { ${PRODUCT_FIELDS} }
+        }
+      }`,
+      variables: { first },
+    });
+    const nodes = data?.products?.nodes || [];
+    return transformShopifyProducts(nodes);
   } catch (error) {
+    console.warn('Error fetching new arrivals products:', error.message);
     return [];
   }
 }
