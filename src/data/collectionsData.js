@@ -171,6 +171,42 @@ export const shopByCollections = [
     image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
     count: 'Live Collection',
   },
+  {
+    id: 23,
+    name: 'Stock Clearance',
+    slug: 'stock-clearance',
+    collectionGid: 'gid://shopify/Collection/490776756375',
+    collectionHandle: 'shawl-copy-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
+  {
+    id: 24,
+    name: 'Summer Sale',
+    slug: 'summer-sale',
+    collectionGid: 'gid://shopify/Collection/490776821911',
+    collectionHandle: 'stock-clearance-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
+  {
+    id: 25,
+    name: 'Winter Sale',
+    slug: 'winter-sale',
+    collectionGid: 'gid://shopify/Collection/490776854679',
+    collectionHandle: 'summer-sale-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
+  {
+    id: 26,
+    name: 'Monsoon Sale',
+    slug: 'monsoon-sale',
+    collectionGid: 'gid://shopify/Collection/490776920215',
+    collectionHandle: 'monsoon-sale-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);

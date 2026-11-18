@@ -193,6 +193,20 @@ export async function fetchProductsByCollection(target, first = 50) {
     'premium-lawn': 'premium-lawn',
     'unstitched-premium-lawn': 'premium-lawn',
 
+    // Sale Deals
+    'sale-stock-clearance': 'gid://shopify/Collection/490776756375',
+    'stock-clearance': 'gid://shopify/Collection/490776756375',
+    'shawl-copy-copy': 'gid://shopify/Collection/490776756375',
+    'sale-summer-sale': 'gid://shopify/Collection/490776821911',
+    'summer-sale': 'gid://shopify/Collection/490776821911',
+    'stock-clearance-copy': 'gid://shopify/Collection/490776821911',
+    'sale-winter-sale': 'gid://shopify/Collection/490776854679',
+    'winter-sale': 'gid://shopify/Collection/490776854679',
+    'summer-sale-copy': 'gid://shopify/Collection/490776854679',
+    'sale-monsoon-sale': 'gid://shopify/Collection/490776920215',
+    'monsoon-sale': 'gid://shopify/Collection/490776920215',
+    'monsoon-sale-copy': 'gid://shopify/Collection/490776920215',
+
     // Special & Instagram
     'special-poncho': 'gid://shopify/Collection/490776461463',
     poncho: 'gid://shopify/Collection/490776461463',
