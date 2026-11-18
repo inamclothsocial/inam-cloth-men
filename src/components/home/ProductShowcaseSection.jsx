@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import Container from '../common/Container';
 import ProductCard from './ProductCard';
-import { INSTAGRAM_PRODUCTS } from '../../data/productsData';
+import { fetchBestSellerProducts } from '../../services/productService';
 
 export default function ProductShowcaseSection() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -15,6 +17,21 @@ export default function ProductShowcaseSection() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollStart, setScrollStart] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchBestSellerProducts(24)
+      .then((res) => {
+        if (isMounted) {
+          setProducts(res || []);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => { isMounted = false; };
+  }, []);
 
   const checkScrollBounds = () => {
     if (!scrollRef.current) return;
@@ -28,7 +45,7 @@ export default function ProductShowcaseSection() {
     checkScrollBounds();
     window.addEventListener('resize', checkScrollBounds);
     return () => window.removeEventListener('resize', checkScrollBounds);
-  }, []);
+  }, [products]);
 
   const scrollBy = (dir) => scrollRef.current?.scrollBy({ left: dir === 'left' ? -380 : 380, behavior: 'smooth' });
   const onMouseDown = (e) => { setIsDragging(true); setStartX(e.pageX - scrollRef.current.offsetLeft); setScrollStart(scrollRef.current.scrollLeft); };
@@ -78,11 +95,22 @@ export default function ProductShowcaseSection() {
             onWheel={onWheel}
             className={`flex gap-3.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory pt-2 pb-3 w-full [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth overscroll-x-contain select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           >
-            {INSTAGRAM_PRODUCTS.map((product) => (
-              <div key={`ig-${product.id}`} className="shrink-0 snap-start">
-                <ProductCard product={product} isActiveTouched={activeTouchedCardId === product.id} onTouchCard={(id) => setActiveTouchedCardId((p) => (p === id ? null : id))} />
+            {loading ? (
+              <div className="flex items-center justify-center py-16 w-full gap-2 text-[#6F756F]">
+                <Loader2 className="w-5 h-5 animate-spin text-[#6fa993]" />
+                <span className="text-sm font-medium">Loading best sellers...</span>
               </div>
-            ))}
+            ) : products.length > 0 ? (
+              products.map((product) => (
+                <div key={`best-seller-${product.id}`} className="shrink-0 snap-start">
+                  <ProductCard product={product} isActiveTouched={activeTouchedCardId === product.id} onTouchCard={(id) => setActiveTouchedCardId((p) => (p === id ? null : id))} />
+                </div>
+              ))
+            ) : (
+              <div className="py-12 w-full text-center text-sm text-[#6F756F]">
+                No best seller products available right now.
+              </div>
+            )}
           </div>
 
           {canScrollRight && (

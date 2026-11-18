@@ -331,6 +331,24 @@ export async function fetchNewArrivalsProducts(first = 50) {
   }
 }
 
+export async function fetchBestSellerProducts(first = 50) {
+  try {
+    const data = await shopifyFetch({
+      query: `query GetBestSellers($first: Int = 50) {
+        products(first: $first, sortKey: BEST_SELLING) {
+          nodes { ${PRODUCT_FIELDS} }
+        }
+      }`,
+      variables: { first },
+    });
+    const nodes = data?.products?.nodes || [];
+    return transformShopifyProducts(nodes);
+  } catch (error) {
+    console.warn('Error fetching best seller products:', error.message);
+    return [];
+  }
+}
+
 export async function fetchAllStoreProducts(first = 50) {
   try {
     const data = await shopifyFetch({
