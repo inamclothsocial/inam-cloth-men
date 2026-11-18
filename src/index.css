@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light only !important;
+  supported-color-schemes: light !important;
+}
+
 @layer base {
   html {
+    color-scheme: light only !important;
+    background-color: #FFFFFF !important;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12,8 +19,9 @@
   }
 
   body {
-    background-color: #FFFFFF;
-    color: #111111;
+    color-scheme: light only !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
     font-family: 'Poppins', system-ui, sans-serif;
     overflow-x: clip;
   }
@@ -21,6 +29,18 @@
   ::selection {
     background-color: #CAB27E;
     color: #FFFFFF;
+  }
+}
+
+/* Force light theme on all mobile browsers and dark-mode devices */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light only !important;
+  }
+  html, body, #root {
+    color-scheme: light only !important;
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
   }
 }
 
