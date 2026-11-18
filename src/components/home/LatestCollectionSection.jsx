@@ -77,7 +77,7 @@ export default function LatestCollectionSection() {
   };
 
   return (
-    <section className="py-8 sm:py-12 bg-white overflow-hidden select-none" aria-label="Latest Collection">
+    <section className="py-8 sm:py-12 bg-white overflow-hidden select-none" aria-label="Instagram Sale">
       <Container size="wide">
         {/* Section Header matching exact photo style */}
         <div className="flex items-end justify-between mb-6 sm:mb-8">
@@ -89,7 +89,7 @@ export default function LatestCollectionSection() {
               transition={{ duration: 0.6 }}
               className="text-xl sm:text-2xl font-bold text-[#18221F] tracking-tight"
             >
-              Latest Collection
+              Instagram Sale
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 12 }}
@@ -98,7 +98,7 @@ export default function LatestCollectionSection() {
               transition={{ duration: 0.6, delay: 0.08 }}
               className="text-xs sm:text-sm text-[#6F756F] mt-1"
             >
-              Shop the latest collection before they sell out
+              Shop the Instagram sale before they sell out
             </motion.p>
           </div>
 
