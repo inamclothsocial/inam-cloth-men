@@ -116,6 +116,24 @@ export function buildCollectionSections(itemsByParent) {
     });
   });
 
+  // Ensure INSTAGRAM SALE is ALWAYS in Fabrics section
+  if (sectionMap['Fabrics']) {
+    const hasIg = sectionMap['Fabrics'].some(
+      (c) => c.name?.toLowerCase().includes('instagram') || c.collectionHandle === 'instagram-sale'
+    );
+    if (!hasIg) {
+      sectionMap['Fabrics'].push({
+        id: 'fab-instagram-sale',
+        name: 'INSTAGRAM SALE',
+        image: getFallbackBanner(),
+        path: '/instagram-sale',
+        sort_order: 99,
+        collectionHandle: 'instagram-sale',
+        collectionGid: 'gid://shopify/Collection/306869239959',
+      });
+    }
+  }
+
   return Object.keys(sectionMap).map((title) => ({
     title,
     cards: sectionMap[title].sort((a, b) => a.sort_order - b.sort_order),

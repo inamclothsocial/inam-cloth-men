@@ -13,6 +13,7 @@ export const COLLECTION_SECTIONS = [
       { id: 'fab-organza', name: 'ORGANZA', image: newArrivalsBanner, path: '/stitched/organza', collectionGid: 'gid://shopify/Collection/490773545111', collectionHandle: 'chiffon-unstitched-copy' },
       { id: 'fab-crepe-suits', name: 'CREPE SUITS', image: newArrivalsBanner, path: '/stitched/crepe-suits', collectionGid: 'gid://shopify/Collection/490773872791', collectionHandle: 'organza-unstitched-copy' },
       { id: 'fab-chinon', name: 'CHINON', image: newArrivalsBanner, path: '/stitched/chinon', collectionGid: 'gid://shopify/Collection/490774364311', collectionHandle: 'crepe-suits-unstitched-copy' },
+      { id: 'fab-instagram-sale', name: 'INSTAGRAM SALE', image: newArrivalsBanner, path: '/instagram-sale', collectionGid: 'gid://shopify/Collection/306869239959', collectionHandle: 'instagram-sale' },
     ],
   },
   {
