@@ -50,6 +50,23 @@ export const GET_PRODUCT_BY_HANDLE_QUERY = `
 let cachedCollectionsMap = null;
 let collectionsMapFetchTime = 0;
 
+const apiCache = new Map();
+const CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes in-memory cache for instant navigation
+
+function getCached(key) {
+  const entry = apiCache.get(key);
+  if (entry && Date.now() - entry.time < CACHE_TTL_MS) {
+    return entry.data;
+  }
+  return null;
+}
+
+function setCached(key, data) {
+  if (data !== undefined && data !== null) {
+    apiCache.set(key, { data, time: Date.now() });
+  }
+}
+
 export async function getShopifyCollectionsMap() {
   const now = Date.now();
   if (cachedCollectionsMap && now - collectionsMapFetchTime < 60000) {
@@ -85,6 +102,11 @@ export async function getShopifyCollectionsMap() {
 
 export async function fetchProductsByCollection(target, first = 50) {
   if (!target) return [];
+  const cacheKey = typeof target === 'string' ? `col_${target}_${first}` : null;
+  if (cacheKey) {
+    const cached = getCached(cacheKey);
+    if (cached) return cached;
+  }
 
   // Known Shopify Collection Mappings
   const KNOWN_OVERRIDES = {
@@ -286,7 +308,9 @@ export async function fetchProductsByCollection(target, first = 50) {
         variables: { id: resolvedGid, first },
       });
       if (data?.node?.products?.nodes !== undefined) {
-        return transformShopifyProducts(data.node.products.nodes);
+        const products = transformShopifyProducts(data.node.products.nodes);
+        if (cacheKey) setCached(cacheKey, products);
+        return products;
       }
     } catch (e) {
       console.warn(`Error fetching collection node ${resolvedGid}:`, e.message);
@@ -295,25 +319,35 @@ export async function fetchProductsByCollection(target, first = 50) {
 
   try {
     const data = await shopifyFetch({ query: GET_COLLECTION_PRODUCTS_QUERY, variables: { handle: target, first } });
-    return transformShopifyProducts(data?.collection?.products?.nodes || []);
+    const products = transformShopifyProducts(data?.collection?.products?.nodes || []);
+    if (cacheKey) setCached(cacheKey, products);
+    return products;
   } catch (e) {
     console.warn(`Error fetching collection ${target}:`, e.message);
-    return [];
+    return cacheKey ? (getCached(cacheKey) || []) : [];
   }
 }
 
 export async function fetchProductByHandle(handle) {
   if (!handle) return null;
+  const cacheKey = `prod_${handle}`;
+  const cached = getCached(cacheKey);
+  if (cached) return cached;
   try {
     const data = await shopifyFetch({ query: GET_PRODUCT_BY_HANDLE_QUERY, variables: { handle } });
-    return transformShopifyProduct(data?.product);
+    const product = transformShopifyProduct(data?.product);
+    if (product) setCached(cacheKey, product);
+    return product;
   } catch (error) {
     console.warn(`Error fetching product ${handle}:`, error.message);
-    return null;
+    return getCached(cacheKey) || null;
   }
 }
 
 export async function fetchNewArrivalsProducts(first = 50) {
+  const cacheKey = `new_arrivals_${first}`;
+  const cached = getCached(cacheKey);
+  if (cached) return cached;
   try {
     const data = await shopifyFetch({
       query: `query GetNewArrivals($first: Int = 50) {
@@ -324,14 +358,19 @@ export async function fetchNewArrivalsProducts(first = 50) {
       variables: { first },
     });
     const nodes = data?.products?.nodes || [];
-    return transformShopifyProducts(nodes);
+    const products = transformShopifyProducts(nodes);
+    setCached(cacheKey, products);
+    return products;
   } catch (error) {
     console.warn('Error fetching new arrivals products:', error.message);
-    return [];
+    return getCached(cacheKey) || [];
   }
 }
 
 export async function fetchBestSellerProducts(first = 50) {
+  const cacheKey = `best_sellers_${first}`;
+  const cached = getCached(cacheKey);
+  if (cached) return cached;
   try {
     const data = await shopifyFetch({
       query: `query GetBestSellers($first: Int = 50) {
@@ -342,10 +381,12 @@ export async function fetchBestSellerProducts(first = 50) {
       variables: { first },
     });
     const nodes = data?.products?.nodes || [];
-    return transformShopifyProducts(nodes);
+    const products = transformShopifyProducts(nodes);
+    setCached(cacheKey, products);
+    return products;
   } catch (error) {
     console.warn('Error fetching best seller products:', error.message);
-    return [];
+    return getCached(cacheKey) || [];
   }
 }
 

@@ -1,15 +1,31 @@
 import { parseShopifyColor } from './colorHelpers';
 
+export function optimizeShopifyImageUrl(url, width = 500) {
+  if (!url || typeof url !== 'string') return url || '';
+  if (!url.includes('cdn.shopify.com')) return url;
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('width', width.toString());
+    urlObj.searchParams.set('format', 'webp');
+    return urlObj.toString();
+  } catch {
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}width=${width}&format=webp`;
+  }
+}
+
 export function transformShopifyProduct(node) {
   if (!node) return null;
   const price = parseFloat(node.priceRange?.minVariantPrice?.amount || '0');
   const compareAtAmount = parseFloat(node.compareAtPriceRange?.minVariantPrice?.amount || '0');
   const originalPrice = compareAtAmount > price ? compareAtAmount : null;
   const currency = node.priceRange?.minVariantPrice?.currencyCode || 'INR';
-  const featuredImg = node.featuredImage?.url || node.images?.nodes?.[0]?.url || '';
-  const hoverImg = node.images?.nodes?.[1]?.url || featuredImg;
+  const rawFeatured = node.featuredImage?.url || node.images?.nodes?.[0]?.url || '';
+  const rawHover = node.images?.nodes?.[1]?.url || rawFeatured;
+  const featuredImg = optimizeShopifyImageUrl(rawFeatured, 500);
+  const hoverImg = optimizeShopifyImageUrl(rawHover, 500);
   const allImages = (node.images?.nodes || []).map((img) => img.url).filter(Boolean);
-  if (!allImages.length && featuredImg) allImages.push(featuredImg);
+  if (!allImages.length && rawFeatured) allImages.push(rawFeatured);
 
   const variants = (node.variants?.nodes || []).map((v) => ({
     id: v.id,
@@ -17,7 +33,7 @@ export function transformShopifyProduct(node) {
     availableForSale: v.availableForSale !== false,
     price: parseFloat(v.price?.amount || price),
     compareAtPrice: v.compareAtPrice ? parseFloat(v.compareAtPrice.amount) : originalPrice,
-    image: v.image?.url || featuredImg,
+    image: optimizeShopifyImageUrl(v.image?.url || rawFeatured, 500),
     selectedOptions: v.selectedOptions || [],
   }));
 

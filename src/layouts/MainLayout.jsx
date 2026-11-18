@@ -30,7 +30,13 @@ export default function MainLayout() {
 
       {/* Main Content Area */}
       <main className="flex-grow">
-        <Outlet />
+        <React.Suspense fallback={
+          <div className="flex items-center justify-center min-h-[50vh] text-[#6fa993]">
+            <div className="w-8 h-8 border-2 border-[#6fa993] border-t-transparent rounded-full animate-spin" />
+          </div>
+        }>
+          <Outlet />
+        </React.Suspense>
       </main>
 
       {/* Luxury Footer */}

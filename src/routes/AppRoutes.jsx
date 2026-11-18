@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
-import NewArrivals from '../pages/NewArrivals';
-import Collections from '../pages/Collections';
-import CollectionDetail from '../pages/CollectionDetail';
-import ProductDetail from '../pages/ProductDetail';
-import ShopNow from '../pages/ShopNow';
-import AboutUs from '../pages/AboutUs';
-import Contact from '../pages/Contact';
-import WishlistPage from '../pages/WishlistPage';
-import CartPage from '../pages/CartPage';
-import ExchangeReturnPolicy from '../pages/ExchangeReturnPolicy';
-import ShippingPolicy from '../pages/ShippingPolicy';
-import TermsConditions from '../pages/TermsConditions';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
+
+const NewArrivals = lazy(() => import('../pages/NewArrivals'));
+const Collections = lazy(() => import('../pages/Collections'));
+const CollectionDetail = lazy(() => import('../pages/CollectionDetail'));
+const ProductDetail = lazy(() => import('../pages/ProductDetail'));
+const ShopNow = lazy(() => import('../pages/ShopNow'));
+const AboutUs = lazy(() => import('../pages/AboutUs'));
+const Contact = lazy(() => import('../pages/Contact'));
+const WishlistPage = lazy(() => import('../pages/WishlistPage'));
+const CartPage = lazy(() => import('../pages/CartPage'));
+const ExchangeReturnPolicy = lazy(() => import('../pages/ExchangeReturnPolicy'));
+const ShippingPolicy = lazy(() => import('../pages/ShippingPolicy'));
+const TermsConditions = lazy(() => import('../pages/TermsConditions'));
+const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
 
 export default function AppRoutes() {
   return (

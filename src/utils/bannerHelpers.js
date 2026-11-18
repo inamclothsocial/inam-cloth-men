@@ -1,6 +1,6 @@
 import { slugify } from './navigationHelpers.js';
-import defaultDesktopBanner from '../assets/banner/New_Arrivals.png';
-import defaultMobileBanner from '../assets/banner/New_Arrivals_Mobile.png';
+import defaultDesktopBanner from '../assets/banner/New_Arrivals.webp';
+import defaultMobileBanner from '../assets/banner/New_Arrivals_Mobile.webp';
 
 export function resolveCollectionBanner(banners, {
   categorySlug = '',

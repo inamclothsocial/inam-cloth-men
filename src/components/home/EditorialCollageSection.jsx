@@ -4,16 +4,16 @@ import { motion } from 'framer-motion';
 import Container from '../common/Container';
 import { slugify } from '../../data/collectionsData';
 
-import img1Laptop from '../../assets/images/image1/image1_leptop.png';
-import img1Mobile from '../../assets/images/image1/image1_mobile.png';
-import img2Laptop from '../../assets/images/image2/image2_leptop.png';
-import img2Mobile from '../../assets/images/image2/image2_mobile.png';
-import img3Laptop from '../../assets/images/image3/image3_leptop.png';
-import img3Mobile from '../../assets/images/image3/image3_mobile.png';
-import img4Laptop from '../../assets/images/image4/image4_leptop.png';
-import img4Mobile from '../../assets/images/image4/image4_mobile.png';
-import img5Laptop from '../../assets/images/image5/image5_leptop.png';
-import img5Mobile from '../../assets/images/image5/image5_mobile.png';
+import img1Laptop from '../../assets/images/image1/image1_leptop.webp';
+import img1Mobile from '../../assets/images/image1/image1_mobile.webp';
+import img2Laptop from '../../assets/images/image2/image2_leptop.webp';
+import img2Mobile from '../../assets/images/image2/image2_mobile.webp';
+import img3Laptop from '../../assets/images/image3/image3_leptop.webp';
+import img3Mobile from '../../assets/images/image3/image3_mobile.webp';
+import img4Laptop from '../../assets/images/image4/image4_leptop.webp';
+import img4Mobile from '../../assets/images/image4/image4_mobile.webp';
+import img5Laptop from '../../assets/images/image5/image5_leptop.webp';
+import img5Mobile from '../../assets/images/image5/image5_mobile.webp';
 
 const items = [
   { id: 1, name: 'Amarige Collection', laptop: img1Laptop, mobile: img1Mobile },

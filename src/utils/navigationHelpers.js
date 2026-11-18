@@ -1,4 +1,4 @@
-import newArrivalsBanner from '../assets/banner/New_Arrivals.png';
+import newArrivalsBanner from '../assets/banner/New_Arrivals.webp';
 
 export function slugify(text) {
   if (!text) return '';
