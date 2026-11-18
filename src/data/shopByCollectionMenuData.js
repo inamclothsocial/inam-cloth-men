@@ -4,7 +4,7 @@ export const COLLECTION_SECTIONS = [
   {
     title: 'Fabrics',
     cards: [
-      { id: 'fab-cotton-dupatta-suits', name: 'COTTON DUPATTA SUITS', image: newArrivalsBanner, path: '/stitched/cotton-dupatta-suits' },
+      { id: 'fab-cotton-dupatta-suits', name: 'COTTON DUPATTA SUITS', image: newArrivalsBanner, path: '/stitched/cotton-dupatta-suits', collectionGid: 'gid://shopify/Collection/490763976855', collectionHandle: 'cotton-dupatta-suits' },
       { id: 'fab-muslin', name: 'MUSLIN', image: newArrivalsBanner, path: '/stitched/muslin' },
       { id: 'fab-rayon', name: 'RAYON', image: newArrivalsBanner, path: '/stitched/rayon' },
       { id: 'fab-chanderi', name: 'CHANDERI', image: newArrivalsBanner, path: '/stitched/chanderi' },

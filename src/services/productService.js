@@ -88,6 +88,14 @@ export async function fetchProductsByCollection(target, first = 50) {
 
   // Known Shopify Collection Mappings
   const KNOWN_OVERRIDES = {
+    // Cotton Dupatta Suits
+    'cotton-dupatta-suits': ['gid://shopify/Collection/490763976855', 'gid://shopify/Collection/490764271767'],
+    'stitched-cotton-dupatta-suits': ['gid://shopify/Collection/490763976855', 'gid://shopify/Collection/490764271767'],
+    'unstitched-cotton-dupatta-suits': ['gid://shopify/Collection/490764271767', 'gid://shopify/Collection/490763976855'],
+    'cotton-dupatta-suits-ustitched': ['gid://shopify/Collection/490764271767', 'gid://shopify/Collection/490763976855'],
+    'cotton-dupatta-suits-unstitched': ['gid://shopify/Collection/490764271767', 'gid://shopify/Collection/490763976855'],
+
+    // Chiffon
     chiffon: ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
     'stitched-chiffon': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
     'unstitched-chiffon': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
@@ -96,6 +104,54 @@ export async function fetchProductsByCollection(target, first = 50) {
     'chiffon-copy': ['gid://shopify/Collection/490773414039', 'gid://shopify/Collection/490773446807'],
     'chiffon-semi-stitched': 'gid://shopify/Collection/490775904407',
     'kimkhab-gharara-copy': 'gid://shopify/Collection/490775904407',
+
+    // Muslin
+    muslin: ['gid://shopify/Collection/490764435607', 'gid://shopify/Collection/490764468375'],
+    'stitched-muslin': ['gid://shopify/Collection/490764435607', 'gid://shopify/Collection/490764468375'],
+    'unstitched-muslin': ['gid://shopify/Collection/490764468375', 'gid://shopify/Collection/490764435607'],
+    'muslin-copy': ['gid://shopify/Collection/490764468375', 'gid://shopify/Collection/490764435607'],
+
+    // Rayon
+    rayon: ['gid://shopify/Collection/490934763671', 'gid://shopify/Collection/490934796439'],
+    'stitched-rayon': ['gid://shopify/Collection/490934763671', 'gid://shopify/Collection/490934796439'],
+    'unstitched-rayon': ['gid://shopify/Collection/490934796439', 'gid://shopify/Collection/490934763671'],
+    'rayon-copy': ['gid://shopify/Collection/490934796439', 'gid://shopify/Collection/490934763671'],
+
+    // Chanderi
+    chanderi: ['gid://shopify/Collection/490772856983', 'gid://shopify/Collection/490773053591'],
+    'stitched-chanderi': ['gid://shopify/Collection/490772856983', 'gid://shopify/Collection/490773053591'],
+    'unstitched-chanderi': ['gid://shopify/Collection/490773053591', 'gid://shopify/Collection/490772856983'],
+    'chanderi-copy': ['gid://shopify/Collection/490773053591', 'gid://shopify/Collection/490772856983'],
+
+    // Georgette
+    georgette: ['gid://shopify/Collection/490773217431', 'gid://shopify/Collection/490773315735'],
+    'stitched-georgette': ['gid://shopify/Collection/490773217431', 'gid://shopify/Collection/490773315735'],
+    'unstitched-georgette': ['gid://shopify/Collection/490773315735', 'gid://shopify/Collection/490773217431'],
+    'chanderi-unstitched-copy': ['gid://shopify/Collection/490773217431', 'gid://shopify/Collection/490773315735'],
+    'georgette-copy': ['gid://shopify/Collection/490773315735', 'gid://shopify/Collection/490773217431'],
+
+    // Organza
+    organza: ['gid://shopify/Collection/490773545111', 'gid://shopify/Collection/490773577879'],
+    'stitched-organza': ['gid://shopify/Collection/490773545111', 'gid://shopify/Collection/490773577879'],
+    'unstitched-organza': ['gid://shopify/Collection/490773577879', 'gid://shopify/Collection/490773545111'],
+    'chiffon-unstitched-copy': ['gid://shopify/Collection/490773545111', 'gid://shopify/Collection/490773577879'],
+    'organza-copy': ['gid://shopify/Collection/490773577879', 'gid://shopify/Collection/490773545111'],
+
+    // Crepe Suits
+    'crepe-suits': ['gid://shopify/Collection/490773872791', 'gid://shopify/Collection/490773938327'],
+    'stitched-crepe-suits': ['gid://shopify/Collection/490773872791', 'gid://shopify/Collection/490773938327'],
+    'unstitched-crepe-suits': ['gid://shopify/Collection/490773938327', 'gid://shopify/Collection/490773872791'],
+    'organza-unstitched-copy': ['gid://shopify/Collection/490773872791', 'gid://shopify/Collection/490773938327'],
+    'crepe-suits-copy': ['gid://shopify/Collection/490773938327', 'gid://shopify/Collection/490773872791'],
+
+    // Chinon
+    chinon: ['gid://shopify/Collection/490774364311', 'gid://shopify/Collection/490774397079'],
+    'stitched-chinon': ['gid://shopify/Collection/490774364311', 'gid://shopify/Collection/490774397079'],
+    'unstitched-chinon': ['gid://shopify/Collection/490774397079', 'gid://shopify/Collection/490774364311'],
+    'crepe-suits-unstitched-copy': ['gid://shopify/Collection/490774364311', 'gid://shopify/Collection/490774397079'],
+    'chinon-copy': ['gid://shopify/Collection/490774397079', 'gid://shopify/Collection/490774364311'],
+
+    // Special & Instagram
     'instagram-sale': 'gid://shopify/Collection/306869239959',
   };
 

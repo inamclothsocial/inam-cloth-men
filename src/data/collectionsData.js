@@ -100,6 +100,15 @@ export const shopByCollections = [
     image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/EFBBA298-F06A-481A-A50B-2CA7E40FC14D.jpg?v=1786719805',
     count: 'Live Collection',
   },
+  {
+    id: 15,
+    name: 'Cotton Dupatta Suits',
+    slug: 'cotton-dupatta-suits',
+    collectionGid: 'gid://shopify/Collection/490763976855',
+    collectionHandle: 'cotton-dupatta-suits',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);
