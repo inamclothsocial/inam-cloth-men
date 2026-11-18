@@ -127,6 +127,23 @@ export const shopByCollections = [
     image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/IMG-6505.jpg?v=1793085599',
     count: 'Live Collection',
   },
+  {
+    id: 18,
+    name: 'Handwork Stitched',
+    slug: 'handwork',
+    collectionGid: 'gid://shopify/Collection/490775609495',
+    collectionHandle: 'farshi-copy',
+    image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/IMG_4295.jpg?v=1793441545',
+    count: 'Live Collection',
+  },
+  {
+    id: 19,
+    name: 'Premium Chikankari',
+    slug: 'premium-chikankari',
+    collectionHandle: 'premium-chikankari',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);

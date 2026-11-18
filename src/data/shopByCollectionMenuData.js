@@ -20,9 +20,9 @@ export const COLLECTION_SECTIONS = [
     cards: [
       { id: 'lux-gowns', name: 'GOWNS', image: newArrivalsBanner, path: '/luxury/stitched/gowns' },
       { id: 'lux-dresses', name: 'DRESSES', image: newArrivalsBanner, path: '/luxury/stitched/dresses' },
-      { id: 'lux-premium-chikankari', name: 'PREMIUM CHIKANKARI', image: newArrivalsBanner, path: '/luxury/stitched/premium-chikankari' },
+      { id: 'lux-premium-chikankari', name: 'PREMIUM CHIKANKARI', image: newArrivalsBanner, path: '/luxury/stitched/premium-chikankari', collectionHandle: 'premium-chikankari' },
       { id: 'lux-farshi', name: 'FARSHI', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/E9BF7BEB-E2B6-4DE6-9606-1F2AF0460C13.jpg?v=1792147443', path: '/luxury/stitched/farshi', collectionGid: 'gid://shopify/Collection/490775478423', collectionHandle: 'premium-chikankari-copy' },
-      { id: 'lux-handwork', name: 'HANDWORK', image: newArrivalsBanner, path: '/luxury/stitched/handwork' },
+      { id: 'lux-handwork', name: 'HANDWORK', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/IMG_4295.jpg?v=1793441545', path: '/luxury/stitched/handwork', collectionGid: 'gid://shopify/Collection/490775609495', collectionHandle: 'farshi-copy' },
       { id: 'lux-kimkhab-gown', name: 'KIMKHAB GOWN', image: newArrivalsBanner, path: '/luxury/stitched/kimkhab-gown' },
       { id: 'lux-chiffon-semi-stitched', name: 'CHIFFON SEMI-STITCHED', image: newArrivalsBanner, path: '/luxury/unstitched/chiffon-semi-stitched' },
       { id: 'lux-organza-handwork', name: 'ORGANZA HANDWORK', image: newArrivalsBanner, path: '/luxury/unstitched/organza-handwork' },

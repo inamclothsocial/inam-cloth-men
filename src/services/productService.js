@@ -173,6 +173,21 @@ export async function fetchProductsByCollection(target, first = 50) {
     'stitched-farshi': 'gid://shopify/Collection/490775478423',
     'premium-chikankari-copy': 'gid://shopify/Collection/490775478423',
 
+    // Handwork (Luxury)
+    'luxury-stitched-handwork': 'gid://shopify/Collection/490775609495',
+    'handwork-stitched': 'gid://shopify/Collection/490775609495',
+    'stitched-handwork': 'gid://shopify/Collection/490775609495',
+    'farshi-copy': 'gid://shopify/Collection/490775609495',
+    'luxury-unstitched-handwork': 'gid://shopify/Collection/490775675031',
+    'handwork-unstitched': 'gid://shopify/Collection/490775675031',
+    'unstitched-handwork': 'gid://shopify/Collection/490775675031',
+    'handwork-copy': 'gid://shopify/Collection/490775675031',
+
+    // Premium Chikankari (Luxury)
+    'luxury-stitched-premium-chikankari': 'premium-chikankari',
+    'premium-chikankari': 'premium-chikankari',
+    'stitched-premium-chikankari': 'premium-chikankari',
+
     // Special & Instagram
     'instagram-sale': 'gid://shopify/Collection/306869239959',
   };
