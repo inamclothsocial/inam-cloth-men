@@ -144,6 +144,33 @@ export const shopByCollections = [
     image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
     count: 'Live Collection',
   },
+  {
+    id: 20,
+    name: 'Hijabs',
+    slug: 'hijabs',
+    collectionGid: 'gid://shopify/Collection/490776526999',
+    collectionHandle: 'poncho-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
+  {
+    id: 21,
+    name: 'Stole',
+    slug: 'stole',
+    collectionGid: 'gid://shopify/Collection/490776625303',
+    collectionHandle: 'hijabs-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
+  {
+    id: 22,
+    name: 'Shawl',
+    slug: 'shawl',
+    collectionGid: 'gid://shopify/Collection/490776690839',
+    collectionHandle: 'stole-copy',
+    image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);

@@ -33,10 +33,10 @@ export const COLLECTION_SECTIONS = [
   {
     title: 'Special',
     cards: [
-      { id: 'spec-poncho', name: 'PONCHO', image: newArrivalsBanner, path: '/special/poncho' },
-      { id: 'spec-hijabs', name: 'HIJABS', image: newArrivalsBanner, path: '/special/hijabs' },
-      { id: 'spec-stole', name: 'STOLE', image: newArrivalsBanner, path: '/special/stole' },
-      { id: 'spec-shawl', name: 'SHAWL', image: newArrivalsBanner, path: '/special/shawl' },
+      { id: 'spec-poncho', name: 'PONCHO', image: newArrivalsBanner, path: '/special/poncho', collectionGid: 'gid://shopify/Collection/490776461463', collectionHandle: 'poncho' },
+      { id: 'spec-hijabs', name: 'HIJABS', image: newArrivalsBanner, path: '/special/hijabs', collectionGid: 'gid://shopify/Collection/490776526999', collectionHandle: 'poncho-copy' },
+      { id: 'spec-stole', name: 'STOLE', image: newArrivalsBanner, path: '/special/stole', collectionGid: 'gid://shopify/Collection/490776625303', collectionHandle: 'hijabs-copy' },
+      { id: 'spec-shawl', name: 'SHAWL', image: newArrivalsBanner, path: '/special/shawl', collectionGid: 'gid://shopify/Collection/490776690839', collectionHandle: 'stole-copy' },
     ],
   },
 ];

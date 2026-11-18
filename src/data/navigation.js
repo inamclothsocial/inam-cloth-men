@@ -73,10 +73,10 @@ export const NAV_LINKS = [
     label: 'Special',
     path: '/special',
     children: [
-      { id: 'special-poncho', label: 'Poncho', path: '/special/poncho' },
-      { id: 'special-hijabs', label: 'Hijabs', path: '/special/hijabs' },
-      { id: 'special-stole', label: 'Stole', path: '/special/stole' },
-      { id: 'special-shawl', label: 'Shawl', path: '/special/shawl' },
+      { id: 'special-poncho', label: 'Poncho', path: '/special/poncho', collectionGid: 'gid://shopify/Collection/490776461463', collectionHandle: 'poncho' },
+      { id: 'special-hijabs', label: 'Hijabs', path: '/special/hijabs', collectionGid: 'gid://shopify/Collection/490776526999', collectionHandle: 'poncho-copy' },
+      { id: 'special-stole', label: 'Stole', path: '/special/stole', collectionGid: 'gid://shopify/Collection/490776625303', collectionHandle: 'hijabs-copy' },
+      { id: 'special-shawl', label: 'Shawl', path: '/special/shawl', collectionGid: 'gid://shopify/Collection/490776690839', collectionHandle: 'stole-copy' },
     ],
   },
   {

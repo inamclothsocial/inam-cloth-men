@@ -194,6 +194,17 @@ export async function fetchProductsByCollection(target, first = 50) {
     'unstitched-premium-lawn': 'premium-lawn',
 
     // Special & Instagram
+    'special-poncho': 'gid://shopify/Collection/490776461463',
+    poncho: 'gid://shopify/Collection/490776461463',
+    'special-hijabs': 'gid://shopify/Collection/490776526999',
+    hijabs: 'gid://shopify/Collection/490776526999',
+    'poncho-copy': 'gid://shopify/Collection/490776526999',
+    'special-stole': 'gid://shopify/Collection/490776625303',
+    stole: 'gid://shopify/Collection/490776625303',
+    'hijabs-copy': 'gid://shopify/Collection/490776625303',
+    'special-shawl': 'gid://shopify/Collection/490776690839',
+    shawl: 'gid://shopify/Collection/490776690839',
+    'stole-copy': 'gid://shopify/Collection/490776690839',
     'instagram-sale': 'gid://shopify/Collection/306869239959',
   };
 
