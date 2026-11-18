@@ -50,7 +50,7 @@ export default function CollectionDetail() {
   }, [navCategory, subCategorySlug]);
 
   const targetHandle = useMemo(() => {
-    if (activeItem) return activeItem.collectionHandle || activeItem.collectionGid || subCategorySlug;
+    if (activeItem) return activeItem.collectionGid || activeItem.collectionHandle || subCategorySlug;
     if (subCategorySlug) return subCategorySlug;
     if (navCategory) {
       const childHandles = navCategory.children?.map((c) => c.collectionHandle).filter(Boolean) || [];
