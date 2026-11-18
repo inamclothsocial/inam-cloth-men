@@ -88,8 +88,11 @@ export const shopByCollections = [
   {
     id: 13,
     name: 'Instagram Sale',
+    slug: 'instagram-sale',
+    collectionGid: 'gid://shopify/Collection/306869239959',
+    collectionHandle: 'instagram-sale',
     image: 'https://inamcloth.com/cdn/shop/files/inlays-minlah-collection.png?v=1732879262&width=540',
-    count: '20+ Designs',
+    count: 'Live Collection',
   },
   {
     id: 14,

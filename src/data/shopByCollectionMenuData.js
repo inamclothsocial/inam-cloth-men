@@ -37,6 +37,7 @@ export const COLLECTION_SECTIONS = [
       { id: 'spec-hijabs', name: 'HIJABS', image: newArrivalsBanner, path: '/special/hijabs', collectionGid: 'gid://shopify/Collection/490776526999', collectionHandle: 'poncho-copy' },
       { id: 'spec-stole', name: 'STOLE', image: newArrivalsBanner, path: '/special/stole', collectionGid: 'gid://shopify/Collection/490776625303', collectionHandle: 'hijabs-copy' },
       { id: 'spec-shawl', name: 'SHAWL', image: newArrivalsBanner, path: '/special/shawl', collectionGid: 'gid://shopify/Collection/490776690839', collectionHandle: 'stole-copy' },
+      { id: 'spec-instagram-sale', name: 'INSTAGRAM SALE', image: newArrivalsBanner, path: '/instagram-sale', collectionGid: 'gid://shopify/Collection/306869239959', collectionHandle: 'instagram-sale' },
     ],
   },
 ];

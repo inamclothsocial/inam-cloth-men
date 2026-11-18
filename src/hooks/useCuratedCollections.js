@@ -7,7 +7,7 @@ export function useCuratedCollections(dynamicSections, collectionBanners) {
     const sections = dynamicSections?.length ? dynamicSections : COLLECTION_SECTIONS;
     const fab = sections.find((s) => s.title?.toLowerCase().includes('fabric'))?.cards || [];
     const lux = sections.find((s) => s.title?.toLowerCase().includes('lux'))?.cards?.slice(0, 4) || [];
-    const spec = sections.find((s) => s.title?.toLowerCase().includes('spec'))?.cards?.slice(0, 4) || [];
+    const spec = sections.find((s) => s.title?.toLowerCase().includes('spec'))?.cards || [];
     const list = [...fab, ...lux, ...spec];
 
     return list.map((card, idx) => {
