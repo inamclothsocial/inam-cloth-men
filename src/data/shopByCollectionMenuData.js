@@ -6,7 +6,7 @@ export const COLLECTION_SECTIONS = [
     cards: [
       { id: 'fab-cotton-dupatta-suits', name: 'COTTON DUPATTA SUITS', image: newArrivalsBanner, path: '/stitched/cotton-dupatta-suits', collectionGid: 'gid://shopify/Collection/490763976855', collectionHandle: 'cotton-dupatta-suits' },
       { id: 'fab-muslin', name: 'MUSLIN', image: newArrivalsBanner, path: '/stitched/muslin' },
-      { id: 'fab-rayon', name: 'RAYON', image: newArrivalsBanner, path: '/stitched/rayon' },
+      { id: 'fab-rayon', name: 'RAYON', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/IMG-6505.jpg?v=1793085599', path: '/stitched/rayon', collectionGid: 'gid://shopify/Collection/490934763671', collectionHandle: 'rayon' },
       { id: 'fab-chanderi', name: 'CHANDERI', image: newArrivalsBanner, path: '/stitched/chanderi' },
       { id: 'fab-georgette', name: 'GEORGETTE', image: newArrivalsBanner, path: '/stitched/georgette' },
       { id: 'fab-chiffon', name: 'CHIFFON', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/EFBBA298-F06A-481A-A50B-2CA7E40FC14D.jpg?v=1786719805', path: '/stitched/chiffon', collectionGid: 'gid://shopify/Collection/490773414039', collectionHandle: 'georgette-unstitched-copy' },

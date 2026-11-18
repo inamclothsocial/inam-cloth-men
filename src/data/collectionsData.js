@@ -118,6 +118,15 @@ export const shopByCollections = [
     image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/E9BF7BEB-E2B6-4DE6-9606-1F2AF0460C13.jpg?v=1792147443',
     count: 'Live Collection',
   },
+  {
+    id: 17,
+    name: 'Rayon',
+    slug: 'rayon',
+    collectionGid: 'gid://shopify/Collection/490934763671',
+    collectionHandle: 'rayon',
+    image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/IMG-6505.jpg?v=1793085599',
+    count: 'Live Collection',
+  },
 ];
 
 export const featuredFiveCollections = shopByCollections.slice(0, 5);

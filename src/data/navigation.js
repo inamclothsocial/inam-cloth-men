@@ -14,7 +14,7 @@ export const NAV_LINKS = [
     children: [
       { id: 'stitched-cotton-dupatta-suits', label: 'Cotton Dupatta Suits', path: '/stitched/cotton-dupatta-suits', collectionGid: 'gid://shopify/Collection/490763976855', collectionHandle: 'cotton-dupatta-suits' },
       { id: 'stitched-muslin', label: 'Muslin', path: '/stitched/muslin' },
-      { id: 'stitched-rayon', label: 'Rayon', path: '/stitched/rayon' },
+      { id: 'stitched-rayon', label: 'Rayon', path: '/stitched/rayon', collectionGid: 'gid://shopify/Collection/490934763671', collectionHandle: 'rayon' },
       { id: 'stitched-chanderi', label: 'Chanderi', path: '/stitched/chanderi' },
       { id: 'stitched-georgette', label: 'Georgette', path: '/stitched/georgette' },
       { id: 'stitched-chiffon', label: 'Chiffon', path: '/stitched/chiffon', collectionGid: 'gid://shopify/Collection/490773414039', collectionHandle: 'georgette-unstitched-copy' },
@@ -30,7 +30,7 @@ export const NAV_LINKS = [
     children: [
       { id: 'unstitched-cotton-dupatta-suits', label: 'Cotton Dupatta Suits', path: '/unstitched/cotton-dupatta-suits', collectionGid: 'gid://shopify/Collection/490764271767', collectionHandle: 'cotton-dupatta-suits-ustitched' },
       { id: 'unstitched-muslin', label: 'Muslin', path: '/unstitched/muslin' },
-      { id: 'unstitched-rayon', label: 'Rayon', path: '/unstitched/rayon' },
+      { id: 'unstitched-rayon', label: 'Rayon', path: '/unstitched/rayon', collectionGid: 'gid://shopify/Collection/490934796439', collectionHandle: 'rayon-copy' },
       { id: 'unstitched-chanderi', label: 'Chanderi', path: '/unstitched/chanderi' },
       { id: 'unstitched-georgette', label: 'Georgette', path: '/unstitched/georgette' },
       { id: 'unstitched-chiffon', label: 'Chiffon', path: '/unstitched/chiffon', collectionGid: 'gid://shopify/Collection/490773414039', collectionHandle: 'georgette-unstitched-copy' },
