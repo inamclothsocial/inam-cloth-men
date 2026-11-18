@@ -21,21 +21,27 @@ const PRODUCT_FIELDS = `
 `;
 
 export const GET_COLLECTION_PRODUCTS_QUERY = `
-  query GetCollectionProducts($handle: String!, $first: Int = 50) {
+  query GetCollectionProducts($handle: String!, $first: Int = 250, $after: String) {
     collection(handle: $handle) {
       id title handle description
       image { url altText }
-      products(first: $first) { nodes { ${PRODUCT_FIELDS} } }
+      products(first: $first, after: $after) {
+        pageInfo { hasNextPage endCursor }
+        nodes { ${PRODUCT_FIELDS} }
+      }
     }
   }
 `;
 
 export const GET_COLLECTION_BY_NODE_QUERY = `
-  query GetCollectionByNode($id: ID!, $first: Int = 50) {
+  query GetCollectionByNode($id: ID!, $first: Int = 250, $after: String) {
     node(id: $id) {
       ... on Collection {
         id title handle description
-        products(first: $first) { nodes { ${PRODUCT_FIELDS} } }
+        products(first: $first, after: $after) {
+          pageInfo { hasNextPage endCursor }
+          nodes { ${PRODUCT_FIELDS} }
+        }
       }
     }
   }
@@ -100,7 +106,7 @@ export async function getShopifyCollectionsMap() {
   }
 }
 
-export async function fetchProductsByCollection(target, first = 50) {
+export async function fetchProductsByCollection(target, first = 250) {
   if (!target) return [];
   const cacheKey = typeof target === 'string' ? `col_${target}_${first}` : null;
   if (cacheKey) {
@@ -256,12 +262,13 @@ export async function fetchProductsByCollection(target, first = 50) {
     const validHandles = target.filter(Boolean);
     if (!validHandles.length) return [];
     if (validHandles.length === 1) return fetchProductsByCollection(validHandles[0], first);
+    const pageSize = Math.min(first, 250);
     const aliases = validHandles
       .map((h, i) => {
         if (h.startsWith('gid://shopify/Collection/')) {
-          return `col_${i}: node(id: "${h}") { ... on Collection { products(first: ${first}) { nodes { ${PRODUCT_FIELDS} } } } }`;
+          return `col_${i}: node(id: "${h}") { ... on Collection { products(first: ${pageSize}) { nodes { ${PRODUCT_FIELDS} } } } }`;
         }
-        return `col_${i}: collection(handle: "${h}") { products(first: ${first}) { nodes { ${PRODUCT_FIELDS} } } }`;
+        return `col_${i}: collection(handle: "${h}") { products(first: ${pageSize}) { nodes { ${PRODUCT_FIELDS} } } }`;
       })
       .join('\n');
     try {
@@ -303,12 +310,31 @@ export async function fetchProductsByCollection(target, first = 50) {
 
   if (resolvedGid && typeof resolvedGid === 'string') {
     try {
-      const data = await shopifyFetch({
-        query: GET_COLLECTION_BY_NODE_QUERY,
-        variables: { id: resolvedGid, first },
-      });
-      if (data?.node?.products?.nodes !== undefined) {
-        const products = transformShopifyProducts(data.node.products.nodes);
+      let allNodes = [];
+      let cursor = null;
+      let hasNextPage = true;
+      const pageSize = Math.min(first, 250);
+
+      while (hasNextPage) {
+        const data = await shopifyFetch({
+          query: GET_COLLECTION_BY_NODE_QUERY,
+          variables: { id: resolvedGid, first: pageSize, after: cursor },
+        });
+        const col = data?.node;
+        const pageNodes = col?.products?.nodes || [];
+        allNodes.push(...pageNodes);
+
+        if (first < 250 || allNodes.length >= first) break;
+
+        const pageInfo = col?.products?.pageInfo;
+        hasNextPage = Boolean(pageInfo?.hasNextPage && pageInfo?.endCursor && pageNodes.length > 0);
+        cursor = pageInfo?.endCursor || null;
+
+        if (allNodes.length >= 1000) break;
+      }
+
+      if (allNodes.length > 0) {
+        const products = transformShopifyProducts(allNodes);
         if (cacheKey) setCached(cacheKey, products);
         return products;
       }
@@ -318,8 +344,30 @@ export async function fetchProductsByCollection(target, first = 50) {
   }
 
   try {
-    const data = await shopifyFetch({ query: GET_COLLECTION_PRODUCTS_QUERY, variables: { handle: target, first } });
-    const products = transformShopifyProducts(data?.collection?.products?.nodes || []);
+    let allNodes = [];
+    let cursor = null;
+    let hasNextPage = true;
+    const pageSize = Math.min(first, 250);
+
+    while (hasNextPage) {
+      const data = await shopifyFetch({
+        query: GET_COLLECTION_PRODUCTS_QUERY,
+        variables: { handle: target, first: pageSize, after: cursor },
+      });
+      const col = data?.collection;
+      const pageNodes = col?.products?.nodes || [];
+      allNodes.push(...pageNodes);
+
+      if (first < 250 || allNodes.length >= first) break;
+
+      const pageInfo = col?.products?.pageInfo;
+      hasNextPage = Boolean(pageInfo?.hasNextPage && pageInfo?.endCursor && pageNodes.length > 0);
+      cursor = pageInfo?.endCursor || null;
+
+      if (allNodes.length >= 1000) break;
+    }
+
+    const products = transformShopifyProducts(allNodes);
     if (cacheKey) setCached(cacheKey, products);
     return products;
   } catch (e) {
@@ -344,21 +392,39 @@ export async function fetchProductByHandle(handle) {
   }
 }
 
-export async function fetchNewArrivalsProducts(first = 50) {
+export async function fetchNewArrivalsProducts(first = 250) {
   const cacheKey = `new_arrivals_${first}`;
   const cached = getCached(cacheKey);
   if (cached) return cached;
   try {
-    const data = await shopifyFetch({
-      query: `query GetNewArrivals($first: Int = 50) {
-        products(first: $first, sortKey: CREATED_AT, reverse: true) {
-          nodes { ${PRODUCT_FIELDS} }
-        }
-      }`,
-      variables: { first },
-    });
-    const nodes = data?.products?.nodes || [];
-    const products = transformShopifyProducts(nodes);
+    let allNodes = [];
+    let cursor = null;
+    let hasNextPage = true;
+    const pageSize = Math.min(first, 250);
+
+    while (hasNextPage) {
+      const data = await shopifyFetch({
+        query: `query GetNewArrivals($first: Int = 250, $after: String) {
+          products(first: $first, sortKey: CREATED_AT, reverse: true, after: $after) {
+            pageInfo { hasNextPage endCursor }
+            nodes { ${PRODUCT_FIELDS} }
+          }
+        }`,
+        variables: { first: pageSize, after: cursor },
+      });
+      const pageNodes = data?.products?.nodes || [];
+      allNodes.push(...pageNodes);
+
+      if (first < 250 || allNodes.length >= first) break;
+
+      const pageInfo = data?.products?.pageInfo;
+      hasNextPage = Boolean(pageInfo?.hasNextPage && pageInfo?.endCursor && pageNodes.length > 0);
+      cursor = pageInfo?.endCursor || null;
+
+      if (allNodes.length >= 1000) break;
+    }
+
+    const products = transformShopifyProducts(allNodes);
     setCached(cacheKey, products);
     return products;
   } catch (error) {
@@ -367,21 +433,39 @@ export async function fetchNewArrivalsProducts(first = 50) {
   }
 }
 
-export async function fetchBestSellerProducts(first = 50) {
+export async function fetchBestSellerProducts(first = 250) {
   const cacheKey = `best_sellers_${first}`;
   const cached = getCached(cacheKey);
   if (cached) return cached;
   try {
-    const data = await shopifyFetch({
-      query: `query GetBestSellers($first: Int = 50) {
-        products(first: $first, sortKey: BEST_SELLING) {
-          nodes { ${PRODUCT_FIELDS} }
-        }
-      }`,
-      variables: { first },
-    });
-    const nodes = data?.products?.nodes || [];
-    const products = transformShopifyProducts(nodes);
+    let allNodes = [];
+    let cursor = null;
+    let hasNextPage = true;
+    const pageSize = Math.min(first, 250);
+
+    while (hasNextPage) {
+      const data = await shopifyFetch({
+        query: `query GetBestSellers($first: Int = 250, $after: String) {
+          products(first: $first, sortKey: BEST_SELLING, after: $after) {
+            pageInfo { hasNextPage endCursor }
+            nodes { ${PRODUCT_FIELDS} }
+          }
+        }`,
+        variables: { first: pageSize, after: cursor },
+      });
+      const pageNodes = data?.products?.nodes || [];
+      allNodes.push(...pageNodes);
+
+      if (first < 250 || allNodes.length >= first) break;
+
+      const pageInfo = data?.products?.pageInfo;
+      hasNextPage = Boolean(pageInfo?.hasNextPage && pageInfo?.endCursor && pageNodes.length > 0);
+      cursor = pageInfo?.endCursor || null;
+
+      if (allNodes.length >= 1000) break;
+    }
+
+    const products = transformShopifyProducts(allNodes);
     setCached(cacheKey, products);
     return products;
   } catch (error) {
@@ -390,17 +474,43 @@ export async function fetchBestSellerProducts(first = 50) {
   }
 }
 
-export async function fetchAllStoreProducts(first = 50) {
+export async function fetchAllStoreProducts(first = 250) {
+  const cacheKey = `all_products_${first}`;
+  const cached = getCached(cacheKey);
+  if (cached) return cached;
   try {
-    const data = await shopifyFetch({
-      query: `query GetAllProducts($first: Int = 50) {
-        products(first: $first) { nodes { ${PRODUCT_FIELDS} } }
-      }`,
-      variables: { first },
-    });
-    return transformShopifyProducts(data?.products?.nodes || []);
+    let allNodes = [];
+    let cursor = null;
+    let hasNextPage = true;
+    const pageSize = Math.min(first, 250);
+
+    while (hasNextPage) {
+      const data = await shopifyFetch({
+        query: `query GetAllProducts($first: Int = 250, $after: String) {
+          products(first: $first, after: $after) {
+            pageInfo { hasNextPage endCursor }
+            nodes { ${PRODUCT_FIELDS} }
+          }
+        }`,
+        variables: { first: pageSize, after: cursor },
+      });
+      const pageNodes = data?.products?.nodes || [];
+      allNodes.push(...pageNodes);
+
+      if (first < 250 || allNodes.length >= first) break;
+
+      const pageInfo = data?.products?.pageInfo;
+      hasNextPage = Boolean(pageInfo?.hasNextPage && pageInfo?.endCursor && pageNodes.length > 0);
+      cursor = pageInfo?.endCursor || null;
+
+      if (allNodes.length >= 1000) break;
+    }
+
+    const products = transformShopifyProducts(allNodes);
+    setCached(cacheKey, products);
+    return products;
   } catch (error) {
     console.warn('Error fetching all products:', error.message);
-    return [];
+    return getCached(cacheKey) || [];
   }
 }
