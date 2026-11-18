@@ -9,7 +9,7 @@ export const COLLECTION_SECTIONS = [
       { id: 'fab-rayon', name: 'RAYON', image: newArrivalsBanner, path: '/stitched/rayon' },
       { id: 'fab-chanderi', name: 'CHANDERI', image: newArrivalsBanner, path: '/stitched/chanderi' },
       { id: 'fab-georgette', name: 'GEORGETTE', image: newArrivalsBanner, path: '/stitched/georgette' },
-      { id: 'fab-chiffon', name: 'CHIFFON', image: newArrivalsBanner, path: '/stitched/chiffon' },
+      { id: 'fab-chiffon', name: 'CHIFFON', image: 'https://cdn.shopify.com/s/files/1/0665/9784/7191/files/EFBBA298-F06A-481A-A50B-2CA7E40FC14D.jpg?v=1786719805', path: '/stitched/chiffon', collectionGid: 'gid://shopify/Collection/490773414039', collectionHandle: 'georgette-unstitched-copy' },
       { id: 'fab-organza', name: 'ORGANZA', image: newArrivalsBanner, path: '/stitched/organza' },
       { id: 'fab-crepe-suits', name: 'CREPE SUITS', image: newArrivalsBanner, path: '/stitched/crepe-suits' },
       { id: 'fab-chinon', name: 'CHINON', image: newArrivalsBanner, path: '/stitched/chinon' },

@@ -47,6 +47,42 @@ export const GET_PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
+let cachedCollectionsMap = null;
+let collectionsMapFetchTime = 0;
+
+export async function getShopifyCollectionsMap() {
+  const now = Date.now();
+  if (cachedCollectionsMap && now - collectionsMapFetchTime < 60000) {
+    return cachedCollectionsMap;
+  }
+  try {
+    const data = await shopifyFetch({
+      query: `query GetAllCollections {
+        collections(first: 100) {
+          nodes { id title handle }
+        }
+      }`,
+    });
+    const nodes = data?.collections?.nodes || [];
+    const map = new Map();
+    nodes.forEach((col) => {
+      if (col.handle) map.set(col.handle.toLowerCase().trim(), col.id);
+      if (col.title) map.set(col.title.toLowerCase().trim(), col.id);
+      const cleanSlug = col.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+      if (cleanSlug) map.set(cleanSlug, col.id);
+    });
+    cachedCollectionsMap = map;
+    collectionsMapFetchTime = now;
+    return map;
+  } catch (err) {
+    console.warn('Error fetching Shopify collections map:', err.message);
+    return cachedCollectionsMap || new Map();
+  }
+}
+
 export async function fetchProductsByCollection(target, first = 50) {
   if (!target) return [];
   if (Array.isArray(target)) {
@@ -71,15 +107,54 @@ export async function fetchProductsByCollection(target, first = 50) {
       return [];
     }
   }
-  if (typeof target === 'string' && target.startsWith('gid://shopify/Collection/')) {
-    try {
-      const data = await shopifyFetch({ query: GET_COLLECTION_BY_NODE_QUERY, variables: { id: target, first } });
-      return transformShopifyProducts(data?.node?.products?.nodes || []);
-    } catch (e) {
-      console.warn(`Error fetching collection node ${target}:`, e.message);
-      return [];
+
+  // Known Shopify Collection Mappings
+  const KNOWN_OVERRIDES = {
+    chiffon: 'gid://shopify/Collection/490773414039',
+    'stitched-chiffon': 'gid://shopify/Collection/490773414039',
+    'unstitched-chiffon': 'gid://shopify/Collection/490773414039',
+    'georgette-unstitched-copy': 'gid://shopify/Collection/490773414039',
+    'chiffon-unstitched': 'gid://shopify/Collection/490773446807',
+    'chiffon-copy': 'gid://shopify/Collection/490773446807',
+    'chiffon-semi-stitched': 'gid://shopify/Collection/490775904407',
+    'kimkhab-gharara-copy': 'gid://shopify/Collection/490775904407',
+    'instagram-sale': 'gid://shopify/Collection/306869239959',
+  };
+
+  let resolvedGid = null;
+  if (typeof target === 'string') {
+    if (target.startsWith('gid://shopify/Collection/')) {
+      resolvedGid = target;
+    } else {
+      const lower = target.toLowerCase().trim();
+      if (KNOWN_OVERRIDES[lower]) {
+        resolvedGid = KNOWN_OVERRIDES[lower];
+      } else {
+        try {
+          const map = await getShopifyCollectionsMap();
+          if (map.has(lower)) {
+            resolvedGid = map.get(lower);
+          }
+        } catch (_) {}
+      }
     }
   }
+
+  if (resolvedGid) {
+    try {
+      const data = await shopifyFetch({
+        query: GET_COLLECTION_BY_NODE_QUERY,
+        variables: { id: resolvedGid, first },
+      });
+      const prods = data?.node?.products?.nodes || [];
+      if (prods.length > 0) {
+        return transformShopifyProducts(prods);
+      }
+    } catch (e) {
+      console.warn(`Error fetching collection node ${resolvedGid}:`, e.message);
+    }
+  }
+
   try {
     const data = await shopifyFetch({ query: GET_COLLECTION_PRODUCTS_QUERY, variables: { handle: target, first } });
     return transformShopifyProducts(data?.collection?.products?.nodes || []);
